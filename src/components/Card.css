@@ -1,0 +1,10 @@
+.Card {
+    width: 20%;
+    margin: 0.5%;
+    display: inline-block;
+    vertical-align: top;
+}
+
+.Image {
+    width: 100%;
+}

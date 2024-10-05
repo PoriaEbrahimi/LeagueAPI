@@ -1,45 +1,37 @@
-import Card from "./Card";
+import Card from './Card';
 import champs from '../assets/index'
-import { useEffect } from "react";
+import { useEffect, useState } from 'react';
+import './List.css'
 
 function List() {
-
+  const [champions, setChampions] = useState<any>(null);
   useEffect(() => {
     const fetchChampions = async () => {
       const version = '13.1.1'; // Use the latest game version here
       const URL = `https://ddragon.leagueoflegends.com/cdn/${version}/data/en_US/champion.json`;
 
-
       try {
         const response = await fetch(URL);
-        const data = await response.json();
+        const champions = await response.json();
+        setChampions(champions);
+        console.log(champions);
       } catch (error) {
         console.error('Error fetching champions:', error);
       }
-    };    
-    
-    fetchChampions();
-  });
+    };
 
-  let champions = [champs.Aatrox, champs.Garen, champs.Illaoi]
+    fetchChampions();
+  }, []);
+
   return (
     <div className="container text-center">
-      <div className="row">
-        <div className="col"><Card img={champions[0]} name="Aatrox"/></div>
-        <div className="col"><Card img={champions[1]} name="Garen"/></div>
-        <div className="col"><Card img={champions[2]} name="Illaoi"/></div>
+      <div className="row List">
+      {champions && champions.data && Object.values(champions.data).map((champion: any) => (
+        <Card img={`https://ddragon.leagueoflegends.com/cdn/img/champion/splash/${champion.id}_0.jpg`} name={champion.name} />
+      ))
+      }
       </div>
-      <div className="row">
-        <div className="col"><Card img={champions[0]} name="Aatrox"/></div>
-        <div className="col"><Card img={champions[1]} name="Garen"/></div>
-        <div className="col"><Card img={champions[2]} name="Illaoi"/></div>
-      </div>
-      <div className="row">
-        <div className="col"><Card img={champions[0]} name="Aatrox"/></div>
-        <div className="col"><Card img={champions[1]} name="Garen"/></div>
-        <div className="col"><Card img={champions[2]} name="Illaoi"/></div>
-      </div>
-    </div>
+    </div >
   );
 }
 

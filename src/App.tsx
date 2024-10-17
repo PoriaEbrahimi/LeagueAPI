@@ -8,7 +8,6 @@ function App() {
       <div>
         <h1 className="mt-5 Title">League of Legends</h1>
         <Search />
-        <List />
       </div>
   );
 }
